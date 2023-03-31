@@ -1,6 +1,7 @@
 package org.acme;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -25,6 +26,15 @@ public class GreetingResource {
     @Produces(MediaType.TEXT_PLAIN)
     public Integer hello(Conteudo conteudo) {
         log.infof("MSG %s", conteudo);
+
+        try {
+            int minSleep = 200;
+            int maxSleep = 500;
+            int sleepTime = ThreadLocalRandom.current().nextInt(minSleep, maxSleep + 1);
+            Thread.sleep(sleepTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return Math.abs(random.nextInt());
     }
 }

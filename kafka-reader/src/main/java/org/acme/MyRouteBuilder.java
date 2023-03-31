@@ -7,7 +7,7 @@ public class MyRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("kafka:transacoes?groupId=geradorBoletos")
+        from("kafka:transacoes?groupId=geradorBoletos&autoOffsetReset=earliest")
         .log("MSG ${body}")
         .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
         .setHeader("accept", constant("text/plain"))
