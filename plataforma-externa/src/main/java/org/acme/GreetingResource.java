@@ -24,6 +24,7 @@ public class GreetingResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Integer hello(Conteudo conteudo) {
+        log.infof("MSG %s", conteudo);
         return Math.abs(random.nextInt());
     }
 }
