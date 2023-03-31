@@ -1,0 +1,17 @@
+version: "2.3"
+services:
+    sftp:
+        image: atmoz/sftp
+        ports:
+            - "9922:22"
+        command: foo:pass:1001:12345:/foo
+        privileged: true
+        volumes:
+        - /tmp/ftp/files:/foo/files
+        networks:
+          - turreta_network
+        
+
+networks:
+  turreta_network:
+    driver: bridge
