@@ -11,6 +11,7 @@ public class MyRouteBuilder extends RouteBuilder {
         .split(body()).streaming()
             .setHeader("id", simple("${body[id]}"))
             .marshal().json(JsonLibrary.Jackson)
+            .log("Transacao ${body}")
             .to("kafka:transacoes")
             .to("sql: update public.transacao t set processado = true where t.id = :#id")
         ;

@@ -8,12 +8,11 @@ public class MyRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("kafka:transacoes?groupId=geradorBoletos&autoOffsetReset=earliest")
-        .log("MSG ${body}")
         .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
         .setHeader("accept", constant("text/plain"))
         .log("MSG ${body}")
-        .to("http://localhost:8083/boletos?httpMethod=post")
-        .log("MSG ${body}")
+        .to("http://{{plataforma-externa.url}}/boletos?httpMethod=post")
+        .log("Retorno ${body}")
         ;
 
     }
