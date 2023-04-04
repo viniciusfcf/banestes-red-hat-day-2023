@@ -1,0 +1,13 @@
+kind: KafkaTopic
+apiVersion: kafka.strimzi.io/v1beta2
+metadata:
+  name: transacoes
+  labels:
+    strimzi.io/cluster: my-cluster
+  namespace: my-kafka
+spec:
+  partitions: 100
+  replicas: 2
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824

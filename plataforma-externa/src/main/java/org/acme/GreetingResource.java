@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 
@@ -21,6 +22,12 @@ public class GreetingResource {
     @Inject
     Logger log;
 
+    @ConfigProperty(name = "min-delay", defaultValue = "50")
+    int minSleep;
+    
+    @ConfigProperty(name = "max-delay", defaultValue = "90")
+    int maxSleep;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
@@ -28,8 +35,6 @@ public class GreetingResource {
         log.infof("MSG %s", conteudo);
 
         try {
-            int minSleep = 200;
-            int maxSleep = 500;
             int sleepTime = ThreadLocalRandom.current().nextInt(minSleep, maxSleep + 1);
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
