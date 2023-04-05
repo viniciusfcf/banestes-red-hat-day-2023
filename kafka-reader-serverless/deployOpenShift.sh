@@ -1,0 +1,1 @@
+quarkus build -Dquarkus.kubernetes.deploy=true
