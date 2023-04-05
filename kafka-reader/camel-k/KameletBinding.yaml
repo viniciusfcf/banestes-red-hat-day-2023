@@ -1,0 +1,35 @@
+# esse só pode ser criado no namespace que estiver o cluster kafka
+apiVersion: camel.apache.org/v1alpha1
+kind: KameletBinding
+metadata:
+  name: http-sink-binding
+spec:
+  source:
+    ref:
+      kind: KafkaTopic
+      apiVersion: kafka.strimzi.io/v1beta1
+      name: transacoes
+  steps:
+    - ref:
+        kind: Kamelet
+        apiVersion: camel.apache.org/v1alpha1
+        name: insert-header-action
+      properties:
+        name: Content-Type
+        value: application/json
+    - ref:
+        kind: Kamelet
+        apiVersion: camel.apache.org/v1alpha1
+        name: insert-header-action
+      properties:
+        name: accept
+        value: text/plain
+      
+  sink:
+    ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: http-sink
+    properties:
+      url: http://plataforma-externa.sistemas-externos.svc.cluster.local/boletos
+      method: POST

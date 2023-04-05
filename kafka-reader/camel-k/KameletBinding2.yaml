@@ -1,0 +1,42 @@
+apiVersion: camel.apache.org/v1alpha1
+kind: KameletBinding
+metadata:
+  name: kafka-source-http-sink-binding
+  namespace: sistemas-internos
+spec:
+  source:
+    ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: kafka-source
+    properties:
+      bootstrapServers: my-cluster-kafka-brokers.my-kafka.svc.cluster.local:9092
+      password: pass
+      topic: transacoes
+      user: user
+      consumerGroup: KafkaToHttpKB
+      securityProtocol: PLAINTEXT
+  steps:
+    - ref:
+        kind: Kamelet
+        apiVersion: camel.apache.org/v1alpha1
+        name: insert-header-action
+      properties:
+        name: Content-Type
+        value: application/json
+    - ref:
+        kind: Kamelet
+        apiVersion: camel.apache.org/v1alpha1
+        name: insert-header-action
+      properties:
+        name: accept
+        value: text/plain
+      
+  sink:
+    ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: http-sink
+    properties:
+      url: http://plataforma-externa.sistemas-externos.svc.cluster.local/boletos
+      method: POST
