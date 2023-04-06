@@ -11,14 +11,13 @@ public class MyRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
 
         restConfiguration().bindingMode(RestBindingMode.json);
-        
-        rest("/")
-                .post()
-                .to("direct:post");
+
+        rest("/").post().produces("text/plain").to("direct:post");
 
         from("direct:post")
             .removeHeaders("*")
             .marshal().json(JsonLibrary.Jackson)
+            
             .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
             .setHeader("accept", constant("text/plain"))
             .log("MSG ${body}")
