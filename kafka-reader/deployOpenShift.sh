@@ -1,1 +1,1 @@
-quarkus build -Dquarkus.kubernetes.deploy=true
+quarkus build --native --no-tests -Dquarkus.native.container-build=true -Dquarkus.kubernetes.deploy=true

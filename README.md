@@ -89,3 +89,29 @@ PGPASSWORD=quarkus psql -h postgresql postgres postgres
 ```
 CREATE TABLE public.transacao(id serial PRIMARY KEY,nome VARCHAR (255) NOT NULL,valor INT NOT NULL,processado BOOLEAN NOT NULL);
 ```
+
+Executar os arquivos deployOpenshift.sh
+
+```
+THANOS_QUERIER_HOST=`oc get route thanos-querier -n openshift-monitoring -o json | jq -r '.spec.host'`
+```
+
+Secret só depois de configurar cluster-monitoring.yml
+
+```
+SECRET=`oc get secret -n openshift-user-workload-monitoring | grep  prometheus-user-workload-token | head -n 1 | awk '{print $1 }'`
+```
+
+```
+TOKEN=`echo $(oc get secret $SECRET -n openshift-user-workload-monitoring -o json | jq -r '.data.token') | base64 -d`
+```
+
+```
+oc rsync arquivos-temp leitor-arquivo-<POD...>:/tmp/ftp/
+```
+
+```
+oc rsh leitor-arquivo-1-5k5n9
+```
+
+Fazer deploy das apps, imagens estao no meu quay. Td nativo, menos o leitor de arquivo.
