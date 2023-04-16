@@ -115,3 +115,10 @@ oc rsh leitor-arquivo-1-5k5n9
 ```
 
 Fazer deploy das apps, imagens estao no meu quay. Td nativo, menos o leitor de arquivo.
+
+
+quay.io/vflorent/leitor-arquivo-jvm-banestes
+
+```
+kn -n sistemas-internos-v2 service update kafka-reader-serverless-banestes --scale-max 100 --scale-window 10s --scale-target 10
+```
