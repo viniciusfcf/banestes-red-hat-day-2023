@@ -62,6 +62,7 @@ oc new-project grafana
 2. Streams
 3. Camel K
 4. Grafana
+5. Keda
 
 ### enable monitoring
 
@@ -118,7 +119,16 @@ Fazer deploy das apps, imagens estao no meu quay. Td nativo, menos o leitor de a
 
 
 quay.io/vflorent/leitor-arquivo-jvm-banestes
+quay.io/vflorent/kafka-reader-banestes 100 replicas no v1
+
 
 ```
 kn -n sistemas-internos-v2 service update kafka-reader-serverless-banestes --scale-max 100 --scale-window 10s --scale-target 10
 ```
+
+```
+oc -n sistemas-internos-v2 autoscale klb kamelet-kafka-source --scale-max 100 --scale-window 10s --scale-target 10
+oc -n sistemas-internos-v2 scale klb kamelet-kafka-source --replicas 100
+```
+
+CONSUMER_GROUP=geradorBoleto-v2
