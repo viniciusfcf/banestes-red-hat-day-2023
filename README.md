@@ -117,11 +117,15 @@ oc rsh leitor-arquivo-1-5k5n9
 
 Fazer deploy das apps, imagens estao no meu quay. Td nativo, menos o leitor de arquivo.
 
+```
+kn -n sistemas-externos service create plataforma-externa --image quay.io/vflorent/plataforma-externa-banestes
+```
 
 quay.io/vflorent/leitor-arquivo-jvm-banestes
 quay.io/vflorent/kafka-reader-banestes 100 replicas no v1
 
 
+DEPRECATED
 ```
 kn -n sistemas-internos-v2 service update kafka-reader-serverless-banestes --scale-max 100 --scale-window 10s --scale-target 10
 ```
@@ -132,3 +136,7 @@ oc -n sistemas-internos-v2 scale klb kamelet-kafka-source --replicas 100
 ```
 
 CONSUMER_GROUP=geradorBoleto-v2
+
+```
+kn -n sistemas-externos service update plataforma-externa --scale-max 100 --scale-window 10s --scale-target 10
+```

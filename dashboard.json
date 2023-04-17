@@ -34,7 +34,7 @@
       "gridPos": {
         "h": 7,
         "w": 9,
-        "x": 1,
+        "x": 0,
         "y": 0
       },
       "hiddenSeries": false,
@@ -93,15 +93,17 @@
       "yaxes": [
         {
           "$$hashKey": "object:241",
+          "decimals": 0,
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
           "$$hashKey": "object:242",
+          "decimals": 0,
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -139,7 +141,7 @@
       "gridPos": {
         "h": 7,
         "w": 6,
-        "x": 10,
+        "x": 9,
         "y": 0
       },
       "id": 13,
@@ -185,21 +187,22 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "yellow",
+                "color": "red",
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 16,
+        "h": 8,
+        "w": 7,
+        "x": 17,
         "y": 0
       },
-      "id": 4,
+      "id": 11,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -219,74 +222,16 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build', pod=~'kafka-reader.*'})",
+          "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", cluster=\"\", namespace=\"sistemas-internos\", pod!~'.*deploy|.*build', container!=\"\", image!=\"\"}) ",
           "hide": false,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "Limits",
           "refId": "B"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Kafka Reader",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "yellow",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 2,
-        "y": 7
-      },
-      "id": 2,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.17",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build'})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total Pods",
+      "title": "Memory Usage",
       "type": "stat"
     },
     {
@@ -312,10 +257,10 @@
       "gridPos": {
         "h": 7,
         "w": 3,
-        "x": 8,
+        "x": 0,
         "y": 7
       },
-      "id": 3,
+      "id": 7,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -335,7 +280,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build', pod=~'buscador-arquivos.*'})",
+          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build', pod=~'leitor-banco.*'})",
           "hide": false,
           "interval": "",
           "legendFormat": "",
@@ -344,7 +289,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Buscador Arquivos",
+      "title": "Leitor Banco",
       "type": "stat"
     },
     {
@@ -370,7 +315,7 @@
       "gridPos": {
         "h": 7,
         "w": 3,
-        "x": 11,
+        "x": 3,
         "y": 7
       },
       "id": 5,
@@ -428,10 +373,10 @@
       "gridPos": {
         "h": 7,
         "w": 3,
-        "x": 14,
+        "x": 6,
         "y": 7
       },
-      "id": 7,
+      "id": 3,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -451,7 +396,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build', pod=~'leitor-banco.*'})",
+          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build', pod=~'buscador-arquivos.*'})",
           "hide": false,
           "interval": "",
           "legendFormat": "",
@@ -460,7 +405,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Leitor Banco",
+      "title": "Buscador Arquivos",
       "type": "stat"
     },
     {
@@ -475,22 +420,21 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
+                "color": "yellow",
                 "value": null
               }
             ]
-          },
-          "unit": "bytes"
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 0,
-        "y": 14
+        "h": 7,
+        "w": 6,
+        "x": 9,
+        "y": 7
       },
-      "id": 11,
+      "id": 2,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -510,183 +454,17 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", cluster=\"\", namespace=\"sistemas-internos\", pod!~'.*deploy|.*build', container!=\"\", image!=\"\"}) ",
+          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build'})",
           "hide": false,
           "interval": "",
-          "legendFormat": "Limits",
+          "legendFormat": "",
           "refId": "B"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Memory Usage",
+      "title": "Total Pods",
       "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 5,
-        "x": 7,
-        "y": 14
-      },
-      "id": 6,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.17",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace='sistemas-internos', pod!~'.*deploy|.*build', resource=\"memory\"})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Limits",
-          "refId": "B"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace='sistemas-internos', pod!~'.*deploy|.*build', resource=\"memory\"})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Requests",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Memory",
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "cpu"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 12,
-        "y": 14
-      },
-      "id": 8,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.17",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace='sistemas-internos', pod!~'.*deploy|.*build', resource=\"cpu\"})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Limits",
-          "refId": "B"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace='sistemas-internos', pod!~'.*deploy|.*build', resource=\"cpu\"})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Requests",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CPU",
-      "type": "timeseries"
     },
     {
       "datasource": null,
@@ -712,8 +490,8 @@
       "gridPos": {
         "h": 8,
         "w": 7,
-        "x": 16,
-        "y": 14
+        "x": 17,
+        "y": 8
       },
       "id": 10,
       "options": {
@@ -746,9 +524,69 @@
       "timeShift": null,
       "title": "CPU Usage",
       "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 3,
+        "y": 14
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.17",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "count(kube_pod_status_phase{phase='Running', namespace='sistemas-internos', pod!~'.*deploy|.*build', pod=~'kafka-reader.*'})",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Kafka Reader",
+      "type": "stat"
     }
   ],
-  "refresh": "5s",
+  "refresh": "",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -763,5 +601,5 @@
   "timezone": "",
   "title": "Banestes",
   "uid": "tTVA0IY4z",
-  "version": 12
+  "version": 4
 }
